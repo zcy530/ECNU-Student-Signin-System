@@ -5,20 +5,28 @@ import './index.scss'
 
 const tabs = [
   {
-    title: '首页',
-    icon: require('@/assets/home.png'),
-    selectedIcon: require('@/assets/home-sel.png'),
+    title: '签到',
+    icon: require('@/assets/science.png'),
+    selectedIcon: require('@/assets/science_sel.png'),
     badge: 0,
     selected: true,
     path: '/index'
   },
   {
-    title: '关于',
-    icon: require('@/assets/discovery.png'),
-    selectedIcon: require('@/assets/discovery-sel.png'),
+    title: '工作台',
+    icon: require('@/assets/explore.png'),
+    selectedIcon: require('@/assets/explore_sel.png'),
     badge: 0,
     selected: false,
     path: '/about'
+  },
+  {
+    title: '我的',
+    icon: require('@/assets/me.png'),
+    selectedIcon: require('@/assets/me_sel.png'),
+    badge: 0,
+    selected: false,
+    path: '/me'
   }
 ]
 function AppTabBar() {

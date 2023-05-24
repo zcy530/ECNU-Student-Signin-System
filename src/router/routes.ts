@@ -2,6 +2,7 @@ import { lazy } from 'react'
 const Index = lazy(() => import(/* webpackChunkName: "Index" */ '@/pages/index'))
 const About = lazy(() => import(/* webpackChunkName: "About" */ '@/pages/about'))
 const Detail = lazy(() => import(/* webpackChunkName: "Detail" */ '@/pages/detail'))
+const Me = lazy(() => import(/* webpackChunkName: "Me" */ '@/pages/me'))
 
 export interface RouteConfig {
   path: string
@@ -23,6 +24,11 @@ export const routes: RouteConfig[] = [
   {
     path: '/detail',
     component: Detail,
+    exact: true
+  },
+  {
+    path: '/me',
+    component: Me,
     exact: true
   }
 ]
