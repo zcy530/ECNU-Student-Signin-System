@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, Method } from 'axios'
 import envConfig from '@/config'
-import { Toast } from 'antd-mobile'
+import { Toast } from 'antd-mobile-v2'
 import { getHttpStatusText } from './status'
 // import { LoadingElement } from '@/components/loading'
 /**

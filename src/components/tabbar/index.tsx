@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TabBar } from 'antd-mobile'
+import { TabBar } from 'antd-mobile-v2'
 import { useHistory, withRouter } from 'react-router-dom'
 import './index.scss'
 
@@ -10,7 +10,7 @@ const tabs = [
     selectedIcon: require('@/assets/science_sel.png'),
     badge: 0,
     selected: true,
-    path: '/index'
+    path: '/home'
   },
   {
     title: '工作台',
@@ -18,7 +18,7 @@ const tabs = [
     selectedIcon: require('@/assets/explore_sel.png'),
     badge: 0,
     selected: false,
-    path: '/about'
+    path: '/workstation'
   },
   {
     title: '我的',
