@@ -9,6 +9,7 @@ const Approval = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/appr
 const Warning = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/warning'))
 const Progress = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/progress'))
 const Signin = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/signin'))
+const Login = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/login'))
 
 export interface RouteConfig {
   path: string
@@ -60,6 +61,11 @@ export const routes: RouteConfig[] = [
   {
     path: '/signin',
     component: Signin,
+    exact: true
+  },
+  {
+    path: '/login',
+    component: Login,
     exact: true
   }
 ]

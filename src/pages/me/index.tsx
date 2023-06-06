@@ -5,8 +5,10 @@ import Logo from '@/components/logo';
 import { Button } from 'antd-mobile-v2';
 import Lottie from 'react-lottie'
 import touxiang from '../../assets/lottie/Designer.json'
+import { useHistory } from 'react-router-dom';
 
 function Me() {
+  const history = useHistory();
   const Item = List.Item;
 
   const Options = {
@@ -36,7 +38,7 @@ function Me() {
     
     </WingBlank>
     <WingBlank>
-        <Button type="ghost" style={{marginTop:15}}>退出登陆</Button>
+        <Button type="ghost" style={{marginTop:15}} onClick={()=> history.push('/login')}>退出登陆</Button>
       </WingBlank>
     </div>
   )

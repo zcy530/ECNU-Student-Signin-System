@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { NavBar, Icon, Button, WingBlank, List, Picker, Flex } from 'antd-mobile-v2'
+import { NavBar, Icon,Toast, Button, WingBlank, List, Picker, Flex } from 'antd-mobile-v2'
 import './index.scss'
+import { text } from 'express'
+import { Value } from 'node-sass'
 
 const Signin = () => {
   const history = useHistory();
-  
+  const Item = List.Item;
+  const [signinway, setSigninway] = useState("请选择签到方式");
+  const [signoutway, setSignoutway] = useState("请选择签退方式");
   const signinWay = [
     [
       {
@@ -34,36 +38,52 @@ const Signin = () => {
             课程签到
       </NavBar>
 
-      <WingBlank style={{marginTop:30}}>
-        <Picker 
-          data={signinWay}
-          title="签到方式"
-          cascade={false}
-          extra="请选择签到方式" >
-          <List.Item 
-          arrow="horizontal"
-          style={{backgroundColor: 'rgb(255,255,255,0.5)',borderRadius:5,marginBottom:8}}>
-            签到方式
-          </List.Item>
-        </Picker>
+      <WingBlank style={{marginTop:20}}>
+        <div style={{marginBottom:20,fontWeight:'bold',fontSize:16}}>课程信息</div>
+        <div style={{marginTop:15}}>
+          <Item extra={'高级编程'} className='item-list-first'>课程名称</Item>
+          <Item extra={'COMC0031112047.01'} className='item-list'>课程代码</Item>
+          <Item extra={'陈良育'} className='item-list-last'>开课老师</Item>
+        </div>
+        <div style={{marginBottom:20,marginTop:20,fontWeight:'bold',fontSize:16}}>签到方式</div>
 
-        <Picker 
-          data={signinWay}
-          title="签到方式"
-          cascade={false}
-          extra="请选择签到方式" >
-          <List.Item 
-          arrow="horizontal"
-          style={{backgroundColor: 'rgb(255,255,255,0.5)',borderRadius:5, marginBottom:8, marginTop:15}}>
-            签退方式
-          </List.Item>
-        </Picker>
+        <div style={{backgroundColor: 'rgb(255,255,255)',borderRadius:10, marginBottom:8, marginTop:15,paddingBottom:20}}>
+          <Picker 
+            data={signinWay}
+            title="签到方式"
+            cascade={false}
+            onChange={(value)=>setSigninway(value![0].toString())}
+            extra={signinway} >
+            <List.Item 
+            arrow="horizontal"
+            style={{backgroundColor: 'rgb(255,255,255)',borderRadius:10, marginBottom:8, marginTop:15}}>
+              签到方式
+            </List.Item>
+          </Picker>
+          <div style={{backgroundColor:'rgb(56, 155, 255)',borderRadius:60,height:100,width:100,paddingTop:40,paddingLeft:20,margin:'auto'}}>开始签到</div>
+        </div>
+
+        <div style={{backgroundColor: 'rgb(255,255,255)',borderRadius:10, marginBottom:8, marginTop:15,paddingBottom:20}}>
+          <Picker 
+            data={signinWay}
+            title="签退方式"
+            cascade={false}
+            onChange={(value)=>setSignoutway(value![0].toString())}
+            extra={signoutway} >
+            <List.Item 
+            arrow="horizontal"
+            style={{backgroundColor: 'rgb(255,255,255)',borderRadius:10, marginBottom:8, marginTop:15}}>
+              签退方式
+            </List.Item>
+          </Picker>
+          <div style={{backgroundColor:'rgb(142, 255, 168)',borderRadius:60,height:100,width:100,paddingTop:40,paddingLeft:20,margin:'auto'}}
+               onClick={()=>{Toast.success('Load success !!!', 1)}}>
+            开始签退
+          </div>
+        </div>
         
-        <Flex>
-          <Flex.Item><Button type='primary' style={{marginTop:10}} onClick={()=>history.push('/home')}>开始签到</Button></Flex.Item>
-          <Flex.Item><Button type='primary' style={{marginTop:10}} onClick={()=>history.push('/home')}>开始签退</Button></Flex.Item>
-        </Flex>
-        <div style={{backgroundColor:'rgb(255, 255, 255,0.3)',padding:10,borderRadius:8,marginTop:15}}>
+        <div style={{marginBottom:20,marginTop:20,fontWeight:'bold',fontSize:16}}>该课程出勤情况</div>
+        <div style={{backgroundColor:'rgb(255, 255, 255)',padding:10,borderRadius:10,marginTop:15}}>
         <Flex>
           <Flex.Item>情况</Flex.Item>
           <Flex.Item><b>正常</b></Flex.Item>
