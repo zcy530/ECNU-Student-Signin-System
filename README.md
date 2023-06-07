@@ -1,3 +1,19 @@
+## todo list
+2023-6-7 
+静态页面已经开发完毕，下面是需要接的接口
+1. 获取课程表，并渲染成课程表
+2. 签到接口
+3. 请假接口
+4. 通过课程id自动补全老师名字
+5. 查看审批状态
+6. 通过id查看具体的审批状态
+7. 撤回申请
+8. 登陆注册
+9. 获取个人信息
+10. 查看缺课预警
+
+
+
 ## react-cli
 
 [![Build Status](https://travis-ci.org/Yechuanjie/react-cli.svg?branch=master)](https://travis-ci.org/Yechuanjie/react-cli)

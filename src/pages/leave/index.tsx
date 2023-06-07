@@ -16,60 +16,64 @@ const LeaveRequest = () => {
   const [leaveReason, setLeaveReason] = useState('请输入请假理由');
   const [createTime, setCreateTime] = useState(new Date());
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   const leaveInfo = {
-  //     "student_id": 10205101485,
-  //     "course_id": courseId,
-  //     "week": 11,
-  //     "reason": leaveReason,
-  //     "term": term,
-  //     "professor_id": 5101485,
-  //     "time": "2022-10-11 17:45:01"
-  //   }
+    const leaveInfo = {
+      "student_id": 10205101485,
+      "course_id": courseId,
+      "week": 11,
+      "reason": leaveReason,
+      "term": term,
+      "professor_id": 5101485,
+      "time": "2022-10-11 17:45:01"
+    }
 
-  //   const config = {
-  //     headers: {
-  //       'Content-type': 'application/json; charset=UTF-8',
-  //       "Access-Control-Allow-Origin":"*",
-  //       "Access-Control-Allow-Methods":"POST, GET, PUT, OPTIONS, DELETE"
-  //     }
-  //   };
+    const config = {
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    };
 
-  //   const getExamPaper = async() => {
-  //       const { data } = await axios.get('http://8.130.86.79:8072/leave-service/leave/info?noteId=10005',config);
-  //       console.log(data.result)
-  //   }
-  //   getExamPaper();
-  // },[])
+    const getExamPaper = () => {
+        fetch('http://8.130.86.79:8072/leave-service/leave/info?noteId=10005', {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+          },
+        })
+        .then(response => response.json())
+        .then((value)=> {
+          console.log(value);
+        })
+    }
+    getExamPaper();
+  },[])
   
   const submitHandler = async() => {
 
     const leaveInfo = {
       "student_id": 10205101485,
       "course_id": "sei-gjbc",
-      "week": 2,
+      "week": 21,
       "reason": "exercitation",
       "term": "2023年春季学期",
       "professor_id": 5101485,
       "time": "2022-10-11 17:45:01"
-  }
-
-    console.log(leaveInfo)
+    }
     fetch('http://8.130.86.79:8072/leave-service/student/askforleave', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        "Access-Control-Allow-Origin":"*",
-        "Access-Control-Allow-Methods":"POST, GET, PUT, OPTIONS, DELETE"
+        'Content-type': 'application/json; charset=UTF-8'
       },
       body: JSON.stringify(leaveInfo)
-    }).then((res)=> {
-      console.log(res);
+    })
+    .then(response => response.json())
+    .then((value)=> {
+      console.log(value);
     })
   }
 
-  const course2 = [
+  const courseList = [
     [
       {
         label: 'sei-gjbc',
@@ -204,7 +208,7 @@ const LeaveRequest = () => {
           <List.Item arrow="horizontal" className='item-list-first'>学期</List.Item>
         </Picker>
         <Picker 
-          data={course2}
+          data={courseList}
           title="课程代码"
           cascade={false}
           onChange={(value)=>setCourseId(value!.toString())}
@@ -235,6 +239,7 @@ const LeaveRequest = () => {
           extra={professor} >
           <List.Item arrow="horizontal" className='item-list-last'>开课教师</List.Item>
         </Picker>
+
         {/* <DatePicker
           mode="date"
           title="Select Date"

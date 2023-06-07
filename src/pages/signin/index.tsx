@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { NavBar, Icon,Toast, Button, WingBlank, List, Picker, Flex } from 'antd-mobile-v2'
+import { NavBar, Icon,Toast, Button, WingBlank, List, Picker, Flex, Modal, ImagePicker,  } from 'antd-mobile-v2'
 import './index.scss'
 import { text } from 'express'
 import { Value } from 'node-sass'
@@ -8,13 +8,16 @@ import { Value } from 'node-sass'
 const Signin = () => {
   const history = useHistory();
   const Item = List.Item;
+  const prompt = Modal.prompt;
+  const [showQRSignModal, setShowQRSignModal] = useState<boolean>(false);
   const [signinway, setSigninway] = useState("请选择签到方式");
   const [signoutway, setSignoutway] = useState("请选择签退方式");
-  const signinWay = [
+  const [file, setFile] = useState([])
+  const signinWayList = [
     [
       {
-        label: '扫码签到',
-        value: '扫码签到',
+        label: '二维码签到',
+        value: '二维码签到',
       },
       { 
         label: '定位签到',
@@ -27,6 +30,11 @@ const Signin = () => {
     ]
   ];
 
+  const onChange = (files, type, index) => {
+    console.log(files, type, index);
+    setFile(files)
+  }
+
   return (
     <div>
       
@@ -37,6 +45,29 @@ const Signin = () => {
         onLeftClick={() => history.push('/home')}>
             课程签到
       </NavBar>
+
+      <Modal
+          visible={showQRSignModal}
+          transparent
+          maskClosable={false}
+          title="二维码签到"
+          footer={[{ text: '确认签到', onPress: () => { setShowQRSignModal(false)}}]}
+        >
+          <div style={{ height: 100, overflow: 'scroll'}}>
+            <div style={{marginLeft: 20}}>
+            请上传二维码照片开始签到
+            </div>
+            <div style={{marginLeft: 80,marginTop:20}}>
+            <ImagePicker
+              files={file}
+              onChange={onChange}
+              onImageClick={(index, fs) => console.log(index, fs)}
+              selectable={file.length < 2}
+              multiple={false}
+            />
+            </div>
+          </div>
+      </Modal>
 
       <WingBlank style={{marginTop:20}}>
         <div style={{marginBottom:20,fontWeight:'bold',fontSize:16}}>课程信息</div>
@@ -49,7 +80,7 @@ const Signin = () => {
 
         <div style={{backgroundColor: 'rgb(255,255,255)',borderRadius:10, marginBottom:8, marginTop:15,paddingBottom:20}}>
           <Picker 
-            data={signinWay}
+            data={signinWayList}
             title="签到方式"
             cascade={false}
             onChange={(value)=>setSigninway(value![0].toString())}
@@ -60,12 +91,32 @@ const Signin = () => {
               签到方式
             </List.Item>
           </Picker>
-          <div style={{backgroundColor:'rgb(56, 155, 255)',borderRadius:60,height:100,width:100,paddingTop:40,paddingLeft:20,margin:'auto'}}>开始签到</div>
+          <div 
+          onClick={() => {
+            if(signinway==='口令签到') {
+              prompt('口令签到', '请输入你的签到口令',
+              [
+                {
+                  text: '取消',
+                },
+                {
+                  text: '提交',
+                  onPress: () => {
+                    console.log('tijiao');
+                  },
+                },
+              ], 'default', '', ['sei-gjbc'])}
+            if(signinway==='二维码签到') {
+              setShowQRSignModal(true);
+            }
+            }
+          }
+          style={{backgroundColor:'rgb(56, 155, 255)',borderRadius:60,height:100,width:100,paddingTop:40,paddingLeft:20,margin:'auto'}}>开始签到</div>
         </div>
 
         <div style={{backgroundColor: 'rgb(255,255,255)',borderRadius:10, marginBottom:8, marginTop:15,paddingBottom:20}}>
           <Picker 
-            data={signinWay}
+            data={signinWayList}
             title="签退方式"
             cascade={false}
             onChange={(value)=>setSignoutway(value![0].toString())}
