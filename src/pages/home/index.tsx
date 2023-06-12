@@ -18,29 +18,28 @@ function Index() {
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [term, setTerm] = useState('请选择学期');
-
   const termList = [
     [
       {
-        label: '2019年',
-        value: '2019年',
-      },
-      {
-        label: '2020年',
-        value: '2020年',
-      },
-      {
-        label: '2021年',
-        value: '2021年',
+        label: '2023年',
+        value: '2023年',
       },
       {
         label: '2022年',
         value: '2022年',
       },
       {
-        label: '2023年',
-        value: '2023年',
+        label: '2021年',
+        value: '2021年',
       },
+      {
+        label: '2020年',
+        value: '2020年',
+      },
+      {
+        label: '2019年',
+        value: '2019年',
+      }, 
     ],
     [
       {
@@ -50,6 +49,10 @@ function Index() {
       {
         label: '秋季学期',
         value: '秋季学期',
+      },
+      {
+        label: '暑假学期',
+        value: '暑假学期',
       },
     ],
   ];

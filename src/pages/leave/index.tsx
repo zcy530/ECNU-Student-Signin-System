@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { NavBar, Picker, Icon, Button, WingBlank, DatePicker, List, TextareaItem, WhiteSpace, Flex } from 'antd-mobile-v2'
+import { NavBar, Picker, Icon, Button, WingBlank, List, TextareaItem, WhiteSpace, Flex, InputItem } from 'antd-mobile-v2'
 import './index.scss'
 import { course, mockCourses } from '../home/mockData'
 import axios from 'axios'
@@ -13,51 +13,19 @@ const LeaveRequest = () => {
   const [week, setWeek] = useState('请选择请假课时');
   const [term, setTerm] = useState('请选择学期');
   const [professor, setProfessor] = useState('请选择开课老师');
+  const [professorId, setProfessorId] = useState('教师代码');
   const [leaveReason, setLeaveReason] = useState('请输入请假理由');
   const [createTime, setCreateTime] = useState(new Date());
-
-  useEffect(() => {
-
-    const leaveInfo = {
-      "student_id": 10205101485,
-      "course_id": courseId,
-      "week": 11,
-      "reason": leaveReason,
-      "term": term,
-      "professor_id": 5101485,
-      "time": "2022-10-11 17:45:01"
-    }
-
-    const config = {
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    };
-
-    const getExamPaper = () => {
-        fetch('http://8.130.86.79:8072/leave-service/leave/info?noteId=10005', {
-          method: 'GET',
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8'
-          },
-        })
-        .then(response => response.json())
-        .then((value)=> {
-          console.log(value);
-        })
-    }
-    getExamPaper();
-  },[])
   
   const submitHandler = async() => {
 
     const leaveInfo = {
       "student_id": 10205101485,
-      "course_id": "sei-gjbc",
-      "week": 21,
-      "reason": "exercitation",
-      "term": "2023年春季学期",
-      "professor_id": 5101485,
+      "course_id": courseId,
+      "week": parseInt(week.charAt(1)),
+      "reason": leaveReason,
+      "term": term,
+      "professor_id": professorId,
       "time": "2022-10-11 17:45:01"
     }
     fetch('http://8.130.86.79:8072/leave-service/student/askforleave', {
@@ -70,14 +38,30 @@ const LeaveRequest = () => {
     .then(response => response.json())
     .then((value)=> {
       console.log(value);
+      history.push('/workstation')
+    })
+  }
+
+  const getCourseInfoHandler = (id) => {
+    fetch(`http://8.130.86.79:8072/office-service/course/teached?studentId=10205101485&term=${term}&courseId=${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    })
+    .then(response => response.json())
+    .then((value)=> {
+      setProfessor(value.name);
+      setProfessorId(value.professor_id)
+      console.log(value);
     })
   }
 
   const courseList = [
     [
       {
-        label: 'sei-gjbc',
-        value: 'sei-gjbc',
+        label: 'EQMHU-YZT4U2tenp',
+        value: 'EQMHU-YZT4U2tenp',
       },
       {
         label: 'sei-czxt',
@@ -117,25 +101,25 @@ const LeaveRequest = () => {
   const termList = [
     [
       {
-        label: '2019年',
-        value: '2019年',
-      },
-      {
-        label: '2020年',
-        value: '2020年',
-      },
-      {
-        label: '2021年',
-        value: '2021年',
+        label: '2023年',
+        value: '2023年',
       },
       {
         label: '2022年',
         value: '2022年',
       },
       {
-        label: '2023年',
-        value: '2023年',
+        label: '2021年',
+        value: '2021年',
       },
+      {
+        label: '2020年',
+        value: '2020年',
+      },
+      {
+        label: '2019年',
+        value: '2019年',
+      }, 
     ],
     [
       {
@@ -145,6 +129,10 @@ const LeaveRequest = () => {
       {
         label: '秋季学期',
         value: '秋季学期',
+      },
+      {
+        label: '暑假学期',
+        value: '暑假学期',
       },
     ],
   ];
@@ -211,7 +199,10 @@ const LeaveRequest = () => {
           data={courseList}
           title="课程代码"
           cascade={false}
-          onChange={(value)=>setCourseId(value!.toString())}
+          onChange={(value)=>{
+            setCourseId(value!.toString());
+            getCourseInfoHandler(value!.toString());
+          }}
           extra={courseId} >
           <List.Item arrow="horizontal" className='item-list'>课程代码</List.Item>
         </Picker>
@@ -239,6 +230,14 @@ const LeaveRequest = () => {
           extra={professor} >
           <List.Item arrow="horizontal" className='item-list-last'>开课教师</List.Item>
         </Picker>
+        <Picker 
+          data={professorList}
+          title="教师代码"
+          cascade={false}
+          onChange={(value)=>{setProfessorId(value!.toString())}}
+          extra={professorId} >
+          <List.Item arrow="horizontal" className='item-list-last'>教师代码</List.Item>
+        </Picker>
 
         {/* <DatePicker
           mode="date"
@@ -263,7 +262,7 @@ const LeaveRequest = () => {
             onChange={(value)=>setLeaveReason(value!.toString())}
           />
         </div>
-        <Button type="ghost" style={{marginTop:30}} onClick={()=>submitHandler()}>提交{term}</Button>
+        <Button type="ghost" style={{marginTop:30}} onClick={()=>submitHandler()}>提交</Button>
         <Button type="ghost" style={{marginTop:15}} onClick={()=>history.push('/workstation')}>返回首页</Button>
       </WingBlank>
 

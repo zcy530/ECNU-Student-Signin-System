@@ -1,12 +1,82 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { NavBar, Card, Icon, Button, WingBlank, WhiteSpace } from 'antd-mobile-v2'
+import { NavBar, Card, Icon, Button, WingBlank, WhiteSpace, Picker, List } from 'antd-mobile-v2'
 import './index.scss'
-import { leave, leaveData } from './mockData'
+import { leave } from './mockData'
 
 const Approval = () => {
   const history = useHistory();
-  const [leaveInfo, setLeaveInfo] = useState<leave[]>(leaveData);
+  const [term, setTerm] = useState<string>('2023年春季学期');
+  const [leaveInfo, setLeaveInfo] = useState<leave[]>([]);
+
+  const leaveStatus = ['待审批','已通过','已提交'];
+
+  // const getCourseName = (id) => {
+  //   fetch(`http://8.130.86.79:8072/office-service//course/info?courseId=ISJAM-xFEj6KneOe`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-type': 'application/json; charset=UTF-8'
+  //     },
+  //   })
+  //   .then(response => response.json())
+  //   .then((value)=> {
+  //     console.log(value);
+  //     return value.name;
+  //   })
+  // }
+
+  const termList = [
+    [
+      {
+        label: '2023年',
+        value: '2023年',
+      },
+      {
+        label: '2022年',
+        value: '2022年',
+      },
+      {
+        label: '2021年',
+        value: '2021年',
+      },
+      {
+        label: '2020年',
+        value: '2020年',
+      },
+      {
+        label: '2019年',
+        value: '2019年',
+      }, 
+    ],
+    [
+      {
+        label: '春季学期',
+        value: '春季学期',
+      },
+      {
+        label: '秋季学期',
+        value: '秋季学期',
+      },
+      {
+        label: '暑假学期',
+        value: '暑假学期',
+      },
+    ],
+  ];
+
+  useEffect(() => {
+    fetch(`http://8.130.86.79:8072/leave-service/student/leaverecord?studentId=10205101485&term=${term}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    })
+    .then(response => response.json())
+    .then((value)=> {
+      setLeaveInfo(value);
+      console.log(leaveInfo)
+    })
+  },[term])
 
   return (
     <div>
@@ -20,20 +90,35 @@ const Approval = () => {
       </NavBar>
 
       <WingBlank style={{marginTop:20}}>
+        <Picker
+          data={termList}
+          title="学期"
+          cascade={false}
+          onChange={(value)=>setTerm(value!.toString().replace(',',''))}
+          extra={term} >
+            <List.Item arrow="horizontal" className='item-list-home'>学期</List.Item>
+        </Picker>
         {leaveInfo.map((value:leave,i)=>(
-            <Card className='leave-card' onClick={()=>history.push('/progress')}>
+
+            <Card className='leave-card' onClick={()=>{
+              history.push(`/progress/GQZBV-eiuBtw75qi`);
+              console.log(leaveInfo)
+              }}>
                 <Card.Header
                     className='leave-card-head'
-                    title={value.course_name}
+                    title={'高级编程课程请假'}
                     extra={<span style={{color:'blue'}}>待审批</span>}
                 />
                 <Card.Body>
-                    <div><b>请假时间：</b>{value.time}</div>
-                    <div style={{marginTop:10}}><b>请假类型：</b>{value.type}</div>
+                    <div><b>请假课时：</b>第{value.week}周</div>
+                    <div style={{marginTop:10}}><b>审核状态：</b>{leaveStatus[value.status]}</div>
+                    <div style={{marginTop:10}}><b>课程代码：</b>{value.course_id}</div>
                     <div style={{marginTop:10}}><b>提交人：</b>{value.name}{' '}{value.student_id}</div>
-                    <div style={{marginTop:10,marginBottom:10}}><b>请假理由详情：</b>{value.reason}</div>
+                    <div style={{marginTop:10}}><b>开课老师：</b>{value.professorName}{' '}{value.professor_id}</div>
+                    <div style={{marginTop:10}}><b>请假理由详情：</b>{value.reason}</div>
+                    <div style={{marginTop:10,marginBottom:10}}><b>提交时间：</b>{value.time}</div>
                 </Card.Body>
-                <Card.Footer content="提交时间: 2023-05-24 23:15:00"/>
+                <Card.Footer content="修改时间: 2023-05-24 23:15:00"/>
             </Card>
         ))}
       </WingBlank>

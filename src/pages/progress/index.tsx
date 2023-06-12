@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { NavBar, List, Steps, Icon, Button, WingBlank } from 'antd-mobile-v2'
 import './index.scss'
 import { leave, leaveDetail } from './mockData'
@@ -9,6 +9,8 @@ const Progress = () => {
   const history = useHistory();
   const Step = Steps.Step;
   const Item = List.Item;
+  let params = useParams();
+  // let id = params.id;
   const [leaveDetailInfo, setLeaveDetailInfo] = useState<leave>(leaveDetail);
   const steps = [
     {
