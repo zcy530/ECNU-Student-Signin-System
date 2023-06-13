@@ -106,7 +106,7 @@ const Approval = () => {
               }}>
                 <Card.Header
                     className='leave-card-head'
-                    title={'高级编程课程请假'}
+                    title={value.courseName + '课程请假'}
                     extra={<span style={{color:'blue'}}>待审批</span>}
                 />
                 <Card.Body>
@@ -121,6 +121,7 @@ const Approval = () => {
                 <Card.Footer content="修改时间: 2023-05-24 23:15:00"/>
             </Card>
         ))}
+        <WhiteSpace size='lg'></WhiteSpace>
       </WingBlank>
 
     </div>

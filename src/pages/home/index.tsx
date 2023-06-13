@@ -17,7 +17,87 @@ function Index() {
   const dispath = useDispatch();
 
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [term, setTerm] = useState('请选择学期');
+  const [term, setTerm] = useState('学期');
+  const [week, setWeek] = useState('周数');
+
+  const weekList = [
+    [
+      {
+        label: '第1周',
+        value: '第1周',
+      },
+      {
+        label: '第2周',
+        value: '第2周',
+      },
+      {
+        label: '第3周',
+        value: '第3周',
+      },
+      {
+        label: '第4周',
+        value: '第4周',
+      },
+      {
+        label: '第5周',
+        value: '第5周',
+      },
+      {
+        label: '第6周',
+        value: '第6周',
+      },
+      {
+        label: '第7周',
+        value: '第7周',
+      },
+      {
+        label: '第8周',
+        value: '第8周',
+      },
+      {
+        label: '第9周',
+        value: '第9周',
+      },
+      {
+        label: '第10周',
+        value: '第10周',
+      },
+      {
+        label: '第11周',
+        value: '第11周',
+      },
+      {
+        label: '第12周',
+        value: '第12周',
+      },
+      {
+        label: '第13周',
+        value: '第13周',
+      },
+      {
+        label: '第14周',
+        value: '第14周',
+      },
+      {
+        label: '第15周',
+        value: '第15周',
+      },
+      {
+        label: '第16周',
+        value: '第16周',
+      },
+      {
+        label: '第17周',
+        value: '第17周',
+      },
+      {
+        label: '第18周',
+        value: '第18周',
+      }
+
+    ]
+  ];
+
   const termList = [
     [
       {
@@ -115,18 +195,18 @@ function Index() {
           </Flex.Item>
           <Flex.Item>
             <Picker
-              data={termList}
-              title="学期"
+              data={weekList}
+              title="周数"
               cascade={false}
-              onChange={(value)=>setTerm(value!.toString().replace(',',''))}
-              extra={term} >
+              onChange={(value)=>setWeek(value!.toString())}
+              extra={week} >
                 <List.Item arrow="horizontal" className='item-list-home'>周数</List.Item>
             </Picker>
           </Flex.Item>
         </Flex>
       </div>
 
-      <div style={{backgroundColor:'rgb(255, 255, 255,0.3)',margin:15,padding:10,borderRadius:10,fontSize:10}}>
+      <div style={{backgroundColor:'rgb(255, 255, 255,0.3)',margin:15,padding:10,borderRadius:10,fontSize:14}}>
         <Flex>
           <Flex.Item>1</Flex.Item>
           <Flex.Item><b>周一</b></Flex.Item>
@@ -140,13 +220,45 @@ function Index() {
         <Flex style={{marginTop:16}}>
           <Flex.Item>8:00</Flex.Item>
           <Flex.Item style={{backgroundColor:'rgb(159, 249, 180)',borderRadius:5,height: 90, padding:4}}>
-            <div onClick={()=>history.push('/signin')}>大学物理<br/>SE0102</div>
+            <div onClick={()=>history.push('/signin')}>高级编程<br/>SE0102</div>
           </Flex.Item>
           <Flex.Item style={{backgroundColor:'rgb(255, 238, 170)',borderRadius:5,height: 90, padding:4}}>
-            <div onClick={()=>setShowModal(true)}>马克思基本原理<br/>MY0112</div>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>马克思基本原理<br/>MY0112</div>
           </Flex.Item>
           <Flex.Item style={{backgroundColor:'rgb(218, 249, 207)',borderRadius:5,height: 90, padding:4}}>
-            <div onClick={()=>Toast.success('Load success !!!', 1)}>Java程序设计<br/>SE0112</div>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>Java程序设计<br/>SE0112</div>
+          </Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(218, 219, 184)',borderRadius:5,height: 90, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>创业基础<br/>SE3332</div>
+          </Flex.Item>
+        </Flex>
+
+        <Flex>
+          <Flex.Item>9:50</Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(210, 195, 244)',borderRadius:5,height: 90, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>专业英语<br/>EG0102</div>
+          </Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(255, 238, 170)',borderRadius:5,height: 90, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>马克思基本原理<br/>MY0112</div>
+          </Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(252, 209, 250)',borderRadius:5,height: 90, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>图像学基础<br/>SE09332</div>
+          </Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(81, 146, 193)',borderRadius:5,height: 90, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>数据库及其应用<br/>SE09332</div>
+          </Flex.Item>
+        </Flex>
+
+        <Flex>
+          <Flex.Item>11:30</Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(170, 214, 164)',borderRadius:5,height: 90, padding:4}}>
+            <div onClick={()=>Toast.success('Load success !!!', 1)}>离散数学<br/>SE0102</div>
+          </Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(189, 165, 255)',borderRadius:5,height: 90, padding:4}}>
+            <div onClick={()=>Toast.success('Load success !!!', 1)}>Java程序设计实验<br/>SE0112</div>
           </Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item style={{backgroundColor:'rgb(218, 219, 184)',borderRadius:5,height: 90, padding:4}}>
@@ -155,59 +267,25 @@ function Index() {
         </Flex>
 
         <Flex>
-          <Flex.Item>9:50</Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(210, 195, 244)',borderRadius:5,height: 90, padding:4}}>
-            <div onClick={()=>Toast.success('Load success !!!', 1)}>专业英语<br/>EG0102</div>
-          </Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(255, 238, 170)',borderRadius:5,height: 90, padding:4}}>
-            <div onClick={()=>Toast.success('Load success !!!', 1)}>马克思基本原理<br/>MY0112</div>
-          </Flex.Item>
+          <Flex.Item>15:00</Flex.Item>
           <Flex.Item></Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(252, 209, 250)',borderRadius:5,height: 90, padding:4}}>
-            <div onClick={()=>Toast.success('Load success !!!', 1)}>图像学基础<br/>SE09332</div>
-          </Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(81, 146, 193)',borderRadius:5,height: 90, padding:4}}>
-            <div onClick={()=>Toast.success('Load success !!!', 1)}>数据库及其应用<br/>SE09332</div>
-          </Flex.Item>
-        </Flex>
-
-        <Flex>
-          <Flex.Item>11:30</Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(170, 214, 164)',borderRadius:5,height: 110, padding:4}}>
-            <div onClick={()=>Toast.success('Load success !!!', 1)}>离散数学<br/>SE0102</div>
-          </Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(255, 251, 211)',borderRadius:5,height: 110, padding:4}}>
+          <Flex.Item style={{backgroundColor:'rgb(255, 251, 211)',borderRadius:5,height: 90, padding:4}}>
             <div onClick={()=>Toast.success('Load success !!!', 1)}>学科导论<br/>MY0112</div>
           </Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(189, 165, 255)',borderRadius:5,height: 110, padding:4}}>
-            <div onClick={()=>Toast.success('Load success !!!', 1)}>Java程序设计实验<br/>SE0112</div>
-          </Flex.Item>
           <Flex.Item></Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(218, 219, 184)',borderRadius:5,height: 110, padding:4}}>
+          <Flex.Item></Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(218, 219, 184)',borderRadius:5,height: 90, padding:4}}>
             <div onClick={()=>Toast.success('Load success !!!', 1)}>创业基础<br/>SE3332</div>
           </Flex.Item>
         </Flex>
 
-        <Flex style={{marginBottom:16}}>
+        <Flex>
           <Flex.Item>13:00</Flex.Item>
           <Flex.Item></Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(255, 251, 211)',borderRadius:5}}>
-            <div onClick={()=>Toast.success('Load success !!!', 1)}>学科导论<br/>MY0112</div>
-          </Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(218, 219, 184)',borderRadius:5}}>
-            <div onClick={()=>Toast.success('Load success !!!', 1)}>创业基础<br/>SE3332</div>
-          </Flex.Item>
-        </Flex>
-
-        <Flex>
-          <Flex.Item>14:50</Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item style={{backgroundColor:'rgb(218, 219, 184)',borderRadius:5}}>
+          <Flex.Item style={{backgroundColor:'rgb(218, 219, 184)',borderRadius:5,height: 90, padding:4}}>
             <div onClick={()=>Toast.success('Load success !!!', 1)}>创业基础<br/>SE3332</div>
           </Flex.Item>
         </Flex>

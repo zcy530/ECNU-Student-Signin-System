@@ -16,7 +16,22 @@ const LeaveRequest = () => {
   const [professorId, setProfessorId] = useState('教师代码');
   const [leaveReason, setLeaveReason] = useState('请输入请假理由');
   const [createTime, setCreateTime] = useState(new Date());
+
+  const [courses, setCourses] = useState<course[]>([]);
   
+  useEffect(() => {
+    fetch(`http://8.130.86.79:8072/account-service/account/student/curriculum?studentId=10205101485&term=2023年春季学期`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    })
+    .then(response => response.json())
+    .then((value)=> {
+      setCourses(value)
+    })
+  },[term])
+
   const submitHandler = async() => {
 
     const leaveInfo = {
@@ -57,46 +72,19 @@ const LeaveRequest = () => {
     })
   }
 
-  const courseList = [
-    [
-      {
-        label: 'EQMHU-YZT4U2tenp',
-        value: 'EQMHU-YZT4U2tenp',
-      },
-      {
-        label: 'sei-czxt',
-        value: 'sei-czxt',
-      },
-    ]
-  ];
-
-  const courseIdList = mockCourses.map((course:course,i)=>{
+  const courseIdList = courses.map((course:course,i)=>{
     return {
-      label: course.courseId,
-      value: course.courseId,
+      label: course.courseId.toString(),
+      value: course.courseId.toString(),
     }
   })
 
-  const courseNameList = [
-    [
-      {
-        label: '操作系统',
-        value: '操作系统',
-      },
-      {
-        label: '高级编程',
-        value: '高级编程',
-      },
-      {
-        label: 'JavaEE',
-        value: 'JavaEE',
-      },
-      {
-        label: '计算机网络',
-        value: '计算机网络',
-      },
-    ]
-  ];
+  const courseNameList = courses.map((course:course,i)=>{
+    return {
+      label: course.name.toString(),
+      value: course.name.toString(),
+    }
+  })
 
   const termList = [
     [
@@ -150,7 +138,68 @@ const LeaveRequest = () => {
       {
         label: '第3周',
         value: '第3周',
+      },
+      {
+        label: '第4周',
+        value: '第4周',
+      },
+      {
+        label: '第5周',
+        value: '第5周',
+      },
+      {
+        label: '第6周',
+        value: '第6周',
+      },
+      {
+        label: '第7周',
+        value: '第7周',
+      },
+      {
+        label: '第8周',
+        value: '第8周',
+      },
+      {
+        label: '第9周',
+        value: '第9周',
+      },
+      {
+        label: '第10周',
+        value: '第10周',
+      },
+      {
+        label: '第11周',
+        value: '第11周',
+      },
+      {
+        label: '第12周',
+        value: '第12周',
+      },
+      {
+        label: '第13周',
+        value: '第13周',
+      },
+      {
+        label: '第14周',
+        value: '第14周',
+      },
+      {
+        label: '第15周',
+        value: '第15周',
+      },
+      {
+        label: '第16周',
+        value: '第16周',
+      },
+      {
+        label: '第17周',
+        value: '第17周',
+      },
+      {
+        label: '第18周',
+        value: '第18周',
       }
+
     ]
   ];
 
@@ -196,7 +245,7 @@ const LeaveRequest = () => {
           <List.Item arrow="horizontal" className='item-list-first'>学期</List.Item>
         </Picker>
         <Picker 
-          data={courseList}
+          data={[courseIdList]}
           title="课程代码"
           cascade={false}
           onChange={(value)=>{
@@ -207,7 +256,7 @@ const LeaveRequest = () => {
           <List.Item arrow="horizontal" className='item-list'>课程代码</List.Item>
         </Picker>
         <Picker 
-          data={courseNameList}
+          data={[courseNameList]}
           title="课程名称"
           cascade={false}
           onChange={(value)=>setCourseName(value!.toString())}
@@ -228,7 +277,7 @@ const LeaveRequest = () => {
           cascade={false}
           onChange={(value)=>{setProfessor(value!.toString())}}
           extra={professor} >
-          <List.Item arrow="horizontal" className='item-list-last'>开课教师</List.Item>
+          <List.Item arrow="horizontal" className='item-list'>开课教师</List.Item>
         </Picker>
         <Picker 
           data={professorList}

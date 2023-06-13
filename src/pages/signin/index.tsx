@@ -16,6 +16,10 @@ const Signin = () => {
   const signinWayList = [
     [
       {
+        label: '人脸识别签到',
+        value: '人脸识别签到',
+      },
+      {
         label: '二维码签到',
         value: '二维码签到',
       },
@@ -50,12 +54,18 @@ const Signin = () => {
           visible={showQRSignModal}
           transparent
           maskClosable={false}
-          title="二维码签到"
-          footer={[{ text: '确认签到', onPress: () => { setShowQRSignModal(false)}}]}
+          title="上传照片签到"
+          footer={[{ text: '确认签到', onPress: () => { 
+            setShowQRSignModal(false);
+            setTimeout(() => {
+              history.push('/home')
+              Toast.success('签到成功！', 2);
+            }, 1000);
+          }}]}
         >
           <div style={{ height: 100, overflow: 'scroll'}}>
-            <div style={{marginLeft: 20}}>
-            请上传二维码照片开始签到
+            <div style={{marginLeft: 13}}>
+            请上传二维码或人脸识别照片开始签到
             </div>
             <div style={{marginLeft: 80,marginTop:20}}>
             <ImagePicker
@@ -103,10 +113,15 @@ const Signin = () => {
                   text: '提交',
                   onPress: () => {
                     console.log('tijiao');
+                    setTimeout(() => {
+                      history.push('/home')
+                      Toast.success('签到成功！', 2);
+                    }, 1000);
                   },
                 },
               ], 'default', '', ['sei-gjbc'])}
-            if(signinway==='二维码签到') {
+              
+            if(signinway==='二维码签到' || signinway==='人脸识别签到') {
               setShowQRSignModal(true);
             }
             }

@@ -1,5 +1,6 @@
 export type leave = {
     noteId: number;
+    courseName: string;
     week: number;
     reason: string;
     time: string;
