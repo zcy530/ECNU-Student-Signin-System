@@ -2,7 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { NavBar, Card, Icon, Button, WingBlank, WhiteSpace, Picker, List } from 'antd-mobile-v2'
 import './index.scss'
-import { leave } from './mockData'
+
+export type leave = {
+  noteId: number;
+  courseName: string;
+  week: number;
+  reason: string;
+  time: string;
+  status: number;
+  term: string;
+  name: string | null;
+  refuseReason: string | null;
+  type: string | null;
+  changeTime: string | null;
+  id: number | null;
+  student_id: number;
+  course_id: string;
+  course_name: string;
+  professor_id: number;
+  professorName: string;
+}
+
 
 const Approval = () => {
   const history = useHistory();
@@ -10,20 +30,6 @@ const Approval = () => {
   const [leaveInfo, setLeaveInfo] = useState<leave[]>([]);
 
   const leaveStatus = ['待审批','已通过','已提交'];
-
-  // const getCourseName = (id) => {
-  //   fetch(`http://8.130.86.79:8072/office-service//course/info?courseId=ISJAM-xFEj6KneOe`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-type': 'application/json; charset=UTF-8'
-  //     },
-  //   })
-  //   .then(response => response.json())
-  //   .then((value)=> {
-  //     console.log(value);
-  //     return value.name;
-  //   })
-  // }
 
   const termList = [
     [
@@ -118,7 +124,7 @@ const Approval = () => {
                     <div style={{marginTop:10}}><b>请假理由详情：</b>{value.reason}</div>
                     <div style={{marginTop:10,marginBottom:10}}><b>提交时间：</b>{value.time}</div>
                 </Card.Body>
-                <Card.Footer content="修改时间: 2023-05-24 23:15:00"/>
+                <Card.Footer content={"修改时间"+value.changeTime}/>
             </Card>
         ))}
         <WhiteSpace size='lg'></WhiteSpace>

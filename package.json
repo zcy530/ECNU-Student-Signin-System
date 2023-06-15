@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.4",
     "mockjs": "^1.1.0",
+    "moment": "^2.29.4",
     "node-sass": "npm:sass@^1.62.1",
     "postcss-px2rem": "^0.3.0",
     "react": "^16.13.1",

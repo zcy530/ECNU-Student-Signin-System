@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.scss'
 import { List, WingBlank } from 'antd-mobile-v2'
 import Logo from '@/components/logo';
@@ -11,6 +11,14 @@ function Me() {
   const history = useHistory();
   const Item = List.Item;
 
+  const [name, setName] = useState<string>('');
+  const [studentId, setStudentId] = useState<number>(0);
+  const [school, setSchool] = useState<string>('');
+  const [college, setCollege] = useState<string>('');
+  const [grade, setGrade] = useState<string>('');
+  const [classs, setClasss] = useState<string>('');
+
+
   const Options = {
     loop: true,
     autoplay: true,
@@ -19,6 +27,24 @@ function Me() {
       preserveAspectRatio: 'xMidYMid slice'
     }
   };
+
+  useEffect(() => {
+    fetch(`http://8.130.86.79:8072/office-service/student/info?studentId=10205101485`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    })
+    .then(response => response.json())
+    .then((value)=> {
+      setName(value.stuname);
+      setStudentId(value.studentId);
+      setSchool(value.department);
+      setCollege(value.major);
+      setGrade(value.year);
+      setClasss(value.classes);
+    })
+  })
 
   return (
     <div>
@@ -30,11 +56,12 @@ function Me() {
       </div>
       <WingBlank>
       
-        <Item extra={'张彩仪'} className='item-list-first'>姓名</Item>
-        <Item extra={'10184602316'} className='item-list'>学号</Item>
-        <Item extra={'软件工程学院'} className='item-list'>学院</Item>
-        <Item extra={'13896796126'} className='item-list'>手机</Item>
-        <Item extra={'女'} className='item-list-last'>性别</Item>
+        <Item extra={name} className='item-list-first'>姓名</Item>
+        <Item extra={studentId} className='item-list'>学号</Item>
+        <Item extra={school} className='item-list'>学院</Item>
+        <Item extra={college} className='item-list'>专业</Item>
+        <Item extra={grade} className='item-list'>年级</Item>
+        <Item extra={classs} className='item-list-last'>班级</Item>
     
     </WingBlank>
     <WingBlank>

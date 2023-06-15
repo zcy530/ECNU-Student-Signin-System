@@ -4,6 +4,7 @@ import { NavBar, Picker, Icon, Button, WingBlank, List, TextareaItem, WhiteSpace
 import './index.scss'
 import { course, mockCourses } from '../home/mockData'
 import axios from 'axios'
+import moment from 'moment';
 
 const LeaveRequest = () => {
   const history = useHistory();
@@ -41,7 +42,7 @@ const LeaveRequest = () => {
       "reason": leaveReason,
       "term": term,
       "professor_id": professorId,
-      "time": "2022-10-11 17:45:01"
+      "time": moment().format('YYYY-MM-DD HH:mm:ss')
     }
     fetch('http://8.130.86.79:8072/leave-service/student/askforleave', {
       method: 'POST',
@@ -69,6 +70,20 @@ const LeaveRequest = () => {
       setProfessor(value.name);
       setProfessorId(value.professor_id)
       console.log(value);
+    })
+  }
+
+  const getCourseNameHandler = (id) => {
+    fetch(`http://8.130.86.79:8072/office-service/course/info?courseId=${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    })
+    .then(response => response.json())
+    .then((value)=> {
+      console.log(value)
+      setCourseName(value.name);
     })
   }
 
@@ -251,6 +266,7 @@ const LeaveRequest = () => {
           onChange={(value)=>{
             setCourseId(value!.toString());
             getCourseInfoHandler(value!.toString());
+            getCourseNameHandler(value!.toString());
           }}
           extra={courseId} >
           <List.Item arrow="horizontal" className='item-list'>课程代码</List.Item>
