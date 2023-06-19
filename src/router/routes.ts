@@ -54,7 +54,7 @@ export const routes: RouteConfig[] = [
     exact: true
   },
   {
-    path: '/progress/:id',
+    path: '/progress',
     component: Progress,
     exact: false
   },

@@ -1,9 +1,29 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { NavBar, Icon,Toast, Button, WingBlank, List, Picker, Flex, Modal, ImagePicker,  } from 'antd-mobile-v2'
+import { NavBar, Icon,Toast, Button, WingBlank, List, Picker, Flex, Modal, ImagePicker, InputItem,  } from 'antd-mobile-v2'
 import './index.scss'
 import { text } from 'express'
 import { Value } from 'node-sass'
+import axios from 'axios';
+ 
+// const getCurrentCity = () => {
+//   const localCity=JSON.parse(localStorage.getItem('hkzf_city')!)
+//   if (!localCity) {//localStorage 中是否有定位城市,没有，保存并返回
+//     return new Promise((resolve, reject) => {
+//       const curCity = new window.BMapGL.LocalCity();
+//       curCity.get(async res => {
+//         try {//成功
+//           const result = await axios.get(`http://localhost:8080/area/info?name=${res.name}`)
+//           localStorage.setItem('hkzf_city', JSON.stringify(result.body))
+//           resolve(res.body)//返回结果为promise：如果直接return，外层函数无法接收到
+//         } catch(e) {//失败
+//           reject(e)
+//         }
+//       })
+//     })
+//   }
+//   return Promise.resolve(localCity)//有，直接返回：此处的 Promise 不会失败
+// }
 
 const Signin = () => {
   const history = useHistory();
@@ -18,10 +38,6 @@ const Signin = () => {
       {
         label: '人脸识别签到',
         value: '人脸识别签到',
-      },
-      {
-        label: '二维码签到',
-        value: '二维码签到',
       },
       { 
         label: '定位签到',
@@ -65,7 +81,7 @@ const Signin = () => {
         >
           <div style={{ height: 100, overflow: 'scroll'}}>
             <div style={{marginLeft: 13}}>
-            请上传二维码或人脸识别照片开始签到
+            请上传人脸识别照片开始签到
             </div>
             <div style={{marginLeft: 80,marginTop:20}}>
             <ImagePicker
@@ -82,9 +98,11 @@ const Signin = () => {
       <WingBlank style={{marginTop:20}}>
         <div style={{marginBottom:20,fontWeight:'bold',fontSize:16}}>课程信息</div>
         <div style={{marginTop:15}}>
-          <Item extra={'高级编程'} className='item-list-first'>课程名称</Item>
-          <Item extra={'COMC0031112047.01'} className='item-list'>课程代码</Item>
-          <Item extra={'陈良育'} className='item-list-last'>开课老师</Item>
+
+          <InputItem extra={'高级编程'} className='item-list-first'>课程名称</InputItem >
+          <InputItem extra={'EQMHU-YZT4U2tenp'} className='item-list'>课程代码</InputItem>
+          <InputItem extra={'莫嘉伦'} className='item-list-last'>开课老师</InputItem>
+
         </div>
         <div style={{marginBottom:20,marginTop:20,fontWeight:'bold',fontSize:16}}>签到方式</div>
 
@@ -121,7 +139,7 @@ const Signin = () => {
                 },
               ], 'default', '', ['sei-gjbc'])}
               
-            if(signinway==='二维码签到' || signinway==='人脸识别签到') {
+            if(signinway==='人脸识别签到') {
               setShowQRSignModal(true);
             }
             }

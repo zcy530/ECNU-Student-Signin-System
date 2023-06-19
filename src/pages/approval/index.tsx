@@ -107,7 +107,12 @@ const Approval = () => {
         {leaveInfo.map((value:leave,i)=>(
 
             <Card className='leave-card' onClick={()=>{
-              history.push(`/progress/GQZBV-eiuBtw75qi`);
+              history.push({
+                pathname:'/progress',
+                state:{
+                  id:value.noteId
+                }
+              });
               console.log(leaveInfo)
               }}>
                 <Card.Header

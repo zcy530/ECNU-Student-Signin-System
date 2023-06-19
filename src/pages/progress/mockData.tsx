@@ -12,8 +12,9 @@ export type leave = {
     id: number | null;
     student_id: number;
     course_id: string;
-    course_name: string;
+    courseName: string;
     professor_id: number;
+    attach: string;
 }
 
 export const leaveDetail:leave = {
@@ -30,6 +31,7 @@ export const leaveDetail:leave = {
     "id": null,
     "student_id": 10205101485,
     "course_id": "sei-gjbc",
-    "course_name": "高级编程",
-    "professor_id": 5101485
+    "courseName": "高级编程",
+    "professor_id": 5101485,
+    attach:'0'
 }
