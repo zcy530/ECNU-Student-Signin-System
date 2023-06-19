@@ -5,25 +5,7 @@ import './index.scss'
 import { text } from 'express'
 import { Value } from 'node-sass'
 import axios from 'axios';
- 
-// const getCurrentCity = () => {
-//   const localCity=JSON.parse(localStorage.getItem('hkzf_city')!)
-//   if (!localCity) {//localStorage 中是否有定位城市,没有，保存并返回
-//     return new Promise((resolve, reject) => {
-//       const curCity = new window.BMapGL.LocalCity();
-//       curCity.get(async res => {
-//         try {//成功
-//           const result = await axios.get(`http://localhost:8080/area/info?name=${res.name}`)
-//           localStorage.setItem('hkzf_city', JSON.stringify(result.body))
-//           resolve(res.body)//返回结果为promise：如果直接return，外层函数无法接收到
-//         } catch(e) {//失败
-//           reject(e)
-//         }
-//       })
-//     })
-//   }
-//   return Promise.resolve(localCity)//有，直接返回：此处的 Promise 不会失败
-// }
+
 
 const Signin = () => {
   const history = useHistory();
@@ -33,6 +15,12 @@ const Signin = () => {
   const [signinway, setSigninway] = useState("请选择签到方式");
   const [signoutway, setSignoutway] = useState("请选择签退方式");
   const [file, setFile] = useState([])
+
+  // const win:any = window
+  // const BMap = win.BMap;
+  // var map = new BMap.Map("root"); 
+  // var point = new BMap.Point(116.404, 39.915); 
+
   const signinWayList = [
     [
       {
@@ -142,6 +130,12 @@ const Signin = () => {
             if(signinway==='人脸识别签到') {
               setShowQRSignModal(true);
             }
+
+            if(signinway==='定位签到') {
+              history.push('/map')
+              // map.centerAndZoom("上海市华东师范大学", 15);
+            }
+
             }
           }
           style={{backgroundColor:'rgb(56, 155, 255)',borderRadius:60,height:100,width:100,paddingTop:40,paddingLeft:20,margin:'auto'}}>开始签到</div>

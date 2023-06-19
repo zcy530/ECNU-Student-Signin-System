@@ -10,6 +10,7 @@ const Warning = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/warni
 const Progress = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/progress'))
 const Signin = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/signin'))
 const Login = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/login'))
+const MyMap = lazy(() => import(/* webpackChunkName: "Leave" */ '@/pages/map'))
 
 export interface RouteConfig {
   path: string
@@ -66,6 +67,11 @@ export const routes: RouteConfig[] = [
   {
     path: '/login',
     component: Login,
+    exact: true
+  },
+  {
+    path: '/map',
+    component: MyMap,
     exact: true
   }
 ]
