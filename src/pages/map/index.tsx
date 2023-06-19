@@ -4,7 +4,7 @@ import { List, NavBar, WingBlank } from 'antd-mobile-v2'
 import { Button,Icon } from 'antd-mobile-v2';
 import Lottie from 'react-lottie'
 import touxiang from '../../assets/lottie/login.json'
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 let win:any = window
 let BMap = win.BMap;
@@ -15,8 +15,24 @@ class MyMap extends Component  {
     componentDidMount(){
        this.bmap = new BMap.Map("allmap");
        this.bmap.centerAndZoom(new BMap.Point(121.4132, 31.236),18)
-        
+
+       const label = new BMap.Label('223', {
+        position: new BMap.Point(121.4132, 31.236),
+        offset: new BMap.Size(-20, -110)
+      })
+
+      label.setContent(`
+      <div style={{height:80,width:80,backgroundColor:'rgb(86, 201, 255)',borderRadius:40}}><Link to='/home'>点击签到</Link></div>`)
+      label.addEventListener('click', () => {
+        // 调用 renderOverlays 方法，获取该区域下的房源数据
+        console.log('1234')
+      })
+  
+      this.bmap.addOverlay(label)
     }
+
+
+
     render() {
         return(
         <div>
@@ -28,8 +44,10 @@ class MyMap extends Component  {
             </NavBar>
             <div id="allmap" style={{height:800}}></div>
             <WingBlank>
+                
                 {/* <Button>确认签到</Button> */}
             </WingBlank>
+            
         </div>
 
         )
