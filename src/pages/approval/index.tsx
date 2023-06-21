@@ -124,7 +124,7 @@ const Approval = () => {
                     <div><b>请假课时：</b>第{value.week}周</div>
                     <div style={{marginTop:10}}><b>审核状态：</b>{leaveStatus[value.status]}</div>
                     <div style={{marginTop:10}}><b>课程代码：</b>{value.course_id}</div>
-                    <div style={{marginTop:10}}><b>提交人：</b>{value.name}{' '}{value.student_id}</div>
+                    <div style={{marginTop:10}}><b>审批人：</b>{value.name}{' '}{value.student_id}</div>
                     <div style={{marginTop:10}}><b>开课老师：</b>{value.professorName}{' '}{value.professor_id}</div>
                     <div style={{marginTop:10}}><b>请假理由详情：</b>{value.reason}</div>
                     <div style={{marginTop:10,marginBottom:10}}><b>提交时间：</b>{value.time}</div>

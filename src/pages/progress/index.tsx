@@ -66,7 +66,7 @@ const Progress = () => {
         
         <div style={{marginBottom:20,marginTop:20,fontWeight:'bold',fontSize:16}}>请假进度详情</div>
         <div style={{marginTop:15}}>
-          <InputItem extra={leaveDetailInfo.name} className='item-list-first'>发起人</InputItem>
+          <InputItem extra={'朱岩'} className='item-list-first'>发起人</InputItem>
           <InputItem extra={leaveDetailInfo.course_id} className='item-list'>课程代码</InputItem>
           <InputItem extra={leaveDetailInfo.courseName} className='item-list'>课程名称</InputItem>
           <Item extra={leaveDetailInfo.professor_id} className='item-list'>教课教师</Item>

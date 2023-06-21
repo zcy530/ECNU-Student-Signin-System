@@ -5,7 +5,7 @@ import './index.scss'
 
 const Warning = () => {
   const history = useHistory();
-  const [data, setData] = useState(['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI']);
+  const [data, setData] = useState(['计算机逻辑', 'JAVA基础', '云端计算']);
   const [imgHeight, setImgHeight] = useState<string|number>(300);
   const [slideIndex, setSlideIndex] = useState(0);
     
@@ -36,15 +36,18 @@ const Warning = () => {
         >
           {data.map((val, index) => (
             <div style={{backgroundColor:'rgb(255,255,255,0.7)',height:420,borderRadius:10,padding:20}}>
-              <div style={{backgroundColor:'rgb(56, 155, 255)',borderRadius:60,height:100,width:100,paddingTop:40,paddingLeft:20,margin:'auto'}}>高级编程</div>
-              <div style={{marginTop:15,marginBottom:15,color:'red'}}><b>连续缺课5节(共18节)</b></div>
+              <div style={{backgroundColor:'rgb(56, 155, 255)',borderRadius:60,height:100,width:100,paddingTop:40,paddingLeft:20,margin:'auto'}}>
+                {val}
+                </div>
+              <div style={{marginTop:15,marginBottom:15,color:'red'}}><b>连续缺课2节(共18节)</b></div>
               <div style={{marginTop:15,marginBottom:15}}>有特殊情况吗？告诉我们:</div>
               <TextareaItem
                 rows={5}
                 placeholder="请输入理由..."
                 clear
               />
-              <Button type="ghost" style={{marginTop:17,marginBottom:15}}>提交说明</Button>
+              <Button type="ghost" style={{marginTop:17,marginBottom:15}}
+              onClick={()=>{history.push('/workstation')}}>提交说明</Button>
             </div>
           ))}
         </Carousel>

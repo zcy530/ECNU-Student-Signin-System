@@ -47,7 +47,8 @@ function Me() {
   })
 
   return (
-    <div>
+    <div style={{paddingBottom:50}}>
+      <div >
       <div className="me-page">
         <div style={{ marginTop: '0.5rem' }}>
          <Lottie options={Options} height={250} width={250}/>
@@ -64,9 +65,11 @@ function Me() {
         <Item extra={classs} className='item-list-last'>班级</Item>
     
     </WingBlank>
-    <WingBlank>
+
+      <WingBlank style={{marginBottom:20}}>
         <Button type="ghost" style={{marginTop:15}} onClick={()=> history.push('/login')}>退出登陆</Button>
       </WingBlank>
+      </div>
     </div>
   )
 }
