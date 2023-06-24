@@ -37,7 +37,15 @@ function Index() {
           </Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item style={{backgroundColor:'rgb(255, 238, 170)',borderRadius:5,height: 120, padding:4}}>
-            <div onClick={()=>history.push('/signin')}>高级编程<br/>FRKNP-G74eWf9c4B</div>
+            <div onClick={()=>{
+              // history.push({
+              //   pathname:'/signin',
+              //   state:{
+              //     week:week
+              //   }
+              // });
+              console.log(week)
+            }}>高级编程<br/>FRKNP-G74eWf9c4B</div>
           </Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item style={{backgroundColor:'rgb(218, 219, 184)',borderRadius:5,height: 120, padding:4}}>
@@ -188,7 +196,96 @@ function Index() {
   const [comp, setComp] = useState(courseCompo2)
 
   useEffect(() => {
-    setComp(term=='2023年春季学期' ? courseCompo : courseCompo2)
+    setComp(term=='2023年春季学期' ? (
+      <>
+      <div style={{backgroundColor:'rgb(255, 255, 255,0.3)',margin:15,padding:10,borderRadius:10,fontSize:14}}>
+        <Flex>
+          <Flex.Item>1</Flex.Item>
+          <Flex.Item><b>周一</b></Flex.Item>
+          <Flex.Item><b>周二</b></Flex.Item>
+          <Flex.Item><b>周三</b></Flex.Item>
+          <Flex.Item><b>周四</b></Flex.Item>
+          <Flex.Item><b>周五</b></Flex.Item>
+          <Flex.Item><b>周六</b></Flex.Item>
+        </Flex>
+
+        <Flex style={{marginTop:16}}>
+          <Flex.Item>8:00</Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(255, 238, 170)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>高级编程<br/>FRKNP-G74eWf9c4B</div>
+          </Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(255, 238, 170)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>{
+              history.push({
+                pathname:'/signin',
+                state:{
+                  week:week
+                }
+              });
+              console.log(week)
+            }}>高级编程<br/>FRKNP-G74eWf9c4B</div>
+          </Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(218, 219, 184)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>编译原理<br/>ETJGZ-HKlRwKwPDo</div>
+          </Flex.Item>
+        </Flex>
+
+        <Flex>
+          <Flex.Item>10:00</Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(210, 195, 244)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>计算机逻辑基础<br/>EQMHU-YZT4U2tenp</div>
+          </Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(159, 249, 180)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>软件测试与验证<br/>VRQCU-FZ0RhNlYNy</div>
+          </Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(165, 255, 234)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>计算机系统<br/>RWCGH-aaKQ7cuoP7</div>
+          </Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(81, 146, 193)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>Toast.fail('还没有到签到时间！', 1)}>数据库及其应用<br/>SE09332</div>
+          </Flex.Item>
+        </Flex>
+
+        <Flex>
+          <Flex.Item>13:00</Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(165, 255, 234)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>Toast.success('Load success !!!', 1)}>关系型数据库<br/>KUQJW-4n62NiUaNh</div>
+          </Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(255, 251, 211)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>Toast.success('Load success !!!', 1)}>需求分析<br/>VXZHX-8AOZmdgDOd</div>
+          </Flex.Item>
+          
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+        </Flex>
+
+        <Flex>
+          <Flex.Item>15:00</Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item style={{backgroundColor:'rgb(251, 178, 255)',borderRadius:5,height: 120, padding:4}}>
+            <div onClick={()=>Toast.success('Load success !!!', 1)}>函数式编程<br/>VXZWB-5BJFMt6vwk</div>
+          </Flex.Item>
+        </Flex>
+
+        <Flex style={{height:120,padding:4}}>
+          <Flex.Item>18:00</Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+        </Flex>
+
+      </div>
+      </>
+    ) : courseCompo2)
   },[term])
 
   const weekList = [
@@ -370,7 +467,7 @@ function Index() {
               data={weekList}
               title="周数"
               cascade={false}
-              onChange={(value)=>setWeek(value!.toString())}
+              onChange={(value)=>{setWeek(value!.toString());console.log(week)}}
               extra={week} >
                 <List.Item arrow="horizontal" className='item-list-home'>周数</List.Item>
             </Picker>

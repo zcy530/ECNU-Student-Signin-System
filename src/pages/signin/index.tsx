@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { NavBar, Icon,Toast, Button, WingBlank, List, Picker, Flex, Modal, ImagePicker, InputItem,  } from 'antd-mobile-v2'
 import './index.scss'
 import { text } from 'express'
 import { Value } from 'node-sass'
 import axios from 'axios';
+import get from 'lodash/get'
+import moment from 'moment'
 
 export type signinResult = {
   roll_call_record_id: number;
@@ -21,6 +23,8 @@ const Signin = () => {
   const history = useHistory();
   const Item = List.Item;
   const prompt = Modal.prompt;
+  const location = useLocation()
+  console.log(parseInt(get(location,'state.week')[1]))
   const [showQRSignModal, setShowQRSignModal] = useState<boolean>(false);
   const [showKoulingSignModal, setShowKoulingSignModal] = useState<boolean>(false);
   const [signinway, setSigninway] = useState("请选择签到方式");
@@ -85,6 +89,42 @@ const Signin = () => {
     })
   },[])
 
+  const submitHandler =() => {
+    fetch(`http://8.130.86.79:8072/office-service/student/info?studentId=10205101485`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    })
+    .then(response => response.json())
+    .then((value)=> {
+      var locationSigin = {
+          "roll_call_record_id": 2344,
+          "student_id": 10205101485,
+          "status": "normal",
+          "time": moment().format('YYYY-MM-DD HH:mm:ss')
+      }
+      var mydata;
+      try {
+          mydata = JSON.stringify(locationSigin)
+      } catch(e) {
+          console.log(e)
+      }
+      fetch(`http://8.130.86.79:8072/signin-service/student/sign`, {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+          },
+          body: mydata
+        })
+        .then(response => response.json())
+        .then((value)=> {
+          console.log(value);
+        })
+    }).catch((e)=>
+      console.log(e))
+  }
+
   return (
     <div>
       
@@ -102,11 +142,21 @@ const Signin = () => {
           maskClosable={false}
           title="上传照片签到"
           footer={[{ text: '确认签到', onPress: () => { 
-            setShowQRSignModal(false);
-            setTimeout(() => {
-              history.push('/home')
-              Toast.success('签到成功！', 2);
-            }, 1000);
+            //setShowQRSignModal(false);
+            if(file.length==0) {
+              
+              setTimeout(() => {
+                history.push('/home')
+                Toast.fail('签到失败！人脸识别失败！', 2);
+                setShowQRSignModal(false)
+              }, 1000);
+            }
+            else {
+              setTimeout(() => {
+                history.push('/home')
+                Toast.success('签到成功！人脸识别成功！', 2);
+              }, 1000);
+            }
           }}]}
         >
           <div style={{ height: 100, overflow: 'scroll'}}>
@@ -133,6 +183,7 @@ const Signin = () => {
           footer={[{ text: '确认签到', onPress: () => { 
             setShowKoulingSignModal(false);
             if(mykouling==kouling){
+              //submitHandler()
               setTimeout(() => {
                 history.push('/home')
                 Toast.success('签到成功！', 2);
@@ -176,6 +227,7 @@ const Signin = () => {
         <div style={{marginBottom:20,marginTop:20,fontWeight:'bold',fontSize:16}}>签到方式</div>
 
         <div style={{backgroundColor: 'rgb(255,255,255)',borderRadius:10, marginBottom:8, marginTop:15,paddingBottom:20}}>
+        <InputItem extra={signinInfo?.roll_call_record_id}>签到id</InputItem>
           <Picker 
             data={signinWayList}
             title="签到方式"
@@ -184,10 +236,11 @@ const Signin = () => {
             extra={signinway} >
             <List.Item 
             arrow="horizontal"
-            style={{backgroundColor: 'rgb(255,255,255)',borderRadius:10, marginBottom:8, marginTop:15}}>
+            style={{backgroundColor: 'rgb(255,255,255)',borderRadius:10, marginBottom:8, marginTop:0}}>
               签到方式
             </List.Item>
           </Picker>
+          
           <div 
           onClick={() => {
             if(signinway==='口令签到') {
@@ -238,7 +291,7 @@ const Signin = () => {
         </Flex>
 
         <Flex style={{marginTop:16}}>
-          <Flex.Item>3.1</Flex.Item>
+          <Flex.Item>4.27</Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
           <Flex.Item></Flex.Item>
@@ -247,7 +300,7 @@ const Signin = () => {
         </Flex>
 
         <Flex style={{marginTop:16}}>
-          <Flex.Item>3.7</Flex.Item>
+          <Flex.Item>5.2</Flex.Item>
           <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item></Flex.Item>
@@ -256,7 +309,7 @@ const Signin = () => {
         </Flex>
 
         <Flex style={{marginTop:16}}>
-          <Flex.Item>3.14</Flex.Item>
+          <Flex.Item>5.9</Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
@@ -264,16 +317,7 @@ const Signin = () => {
           <Flex.Item></Flex.Item>
         </Flex>
         <Flex style={{marginTop:16}}>
-          <Flex.Item>3.21</Flex.Item>
-          <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-        </Flex>
-        <Flex style={{marginTop:16}}>
-          <Flex.Item>3.28</Flex.Item>
+          <Flex.Item>5.16</Flex.Item>
           <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item></Flex.Item>
@@ -282,7 +326,16 @@ const Signin = () => {
           <Flex.Item></Flex.Item>
         </Flex>
         <Flex style={{marginTop:16}}>
-          <Flex.Item>4.5</Flex.Item>
+          <Flex.Item>5.23</Flex.Item>
+          <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+        </Flex>
+        <Flex style={{marginTop:16}}>
+          <Flex.Item>5.30</Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
           <Flex.Item></Flex.Item>
@@ -291,17 +344,8 @@ const Signin = () => {
           <Flex.Item></Flex.Item>
         </Flex>
         <Flex style={{marginTop:16}}>
-          <Flex.Item>4.12</Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-          <Flex.Item></Flex.Item>
-        </Flex>
-        <Flex style={{marginTop:16}}>
-          <Flex.Item>4.19</Flex.Item>
-          <Flex.Item></Flex.Item>
+          <Flex.Item>6.7</Flex.Item>
+          <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item></Flex.Item>
@@ -309,8 +353,17 @@ const Signin = () => {
           <Flex.Item></Flex.Item>
         </Flex>
         <Flex style={{marginTop:16}}>
-          <Flex.Item>4.26</Flex.Item>
+          <Flex.Item>6.14</Flex.Item>
+          <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
           <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+          <Flex.Item></Flex.Item>
+        </Flex>
+        <Flex style={{marginTop:16}}>
+          <Flex.Item>6.21</Flex.Item>
+          <Flex.Item><Icon type="check-circle-o" /></Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item></Flex.Item>
           <Flex.Item></Flex.Item>
